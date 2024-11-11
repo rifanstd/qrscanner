@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qrscanner/app/core/values/app_icons.dart';
+import 'package:qrscanner/app/core/values/assets/app_icons.dart';
 import 'package:qrscanner/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -40,7 +40,7 @@ class HomeView extends GetView<HomeController> {
                 MenuItem(
                   title: "Scan QR Code",
                   iconPath: AppIcons.scanQr,
-                  onTap: () {},
+                  onTap: () => Get.toNamed(Routes.SCAN_QR),
                 ),
               ],
             ),

@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
+import '../../../global_widgets/custom_button.dart';
 import '../controllers/generate_qr_controller.dart';
+import '../local_widgets/download_button.dart';
+import '../local_widgets/helper_info_field.dart';
+import '../local_widgets/qr_text_input_field.dart';
 
 class GenerateQrView extends GetView<GenerateQrController> {
   const GenerateQrView({super.key});
@@ -32,56 +36,15 @@ class GenerateQrView extends GetView<GenerateQrController> {
                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    "You can put anythting like normal text, link, number, email, etc.",
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 12,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
+                  const HelperInfoField(),
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: controller.qrTextController,
-                    cursorColor: Colors.amber,
-                    keyboardType: TextInputType.multiline,
-                    textInputAction: TextInputAction.newline,
-                    maxLines: null,
-                    minLines: 1,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Enter your text ",
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.amberAccent), // Warna border bawah saat tidak fokus
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.amber, width: 2), // Warna border bawah saat fokus
-                      ),
-                    ),
-                  ),
+                  QRTextInputField(textEditingController: controller.qrTextController),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: Get.width,
-                    child: FilledButton(
+                    child: FilledPrimaryButton(
                       onPressed: controller.generateQr,
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.amber),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // Atur border radius sesuai keinginan
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        "Generate",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      title: "Generate",
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -124,33 +87,8 @@ class GenerateQrView extends GetView<GenerateQrController> {
                                 },
                               ),
                               const SizedBox(height: 16),
-                              InkWell(
-                                onTap: () => controller.saveQr(context),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: Colors.amber),
-                                  ),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.download_rounded,
-                                        color: Colors.amber,
-                                        size: 18,
-                                      ),
-                                      SizedBox(width: 4),
-                                      Text(
-                                        "Download",
-                                        style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              DownloadButton(
+                                onClicked: () => controller.saveQr(context),
                               ),
                             ],
                           ),
